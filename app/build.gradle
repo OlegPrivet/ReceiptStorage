@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
+    id 'com.google.dagger.hilt.android'
+    id "org.jetbrains.kotlin.kapt"
+}
+
+android {
+    namespace 'com.example.receiptstorage'
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        applicationId "com.example.receiptstorage"
+        minSdk versions.minSDK
+        targetSdk versions.targetSDK
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner deps.testInstrumentationRunner
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = kotlin_jvm_target
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.4.3"
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            pickFirsts += "META-INF/DEPENDENCIES"
+        }
+    }
+}
+
+dependencies {
+    implementation deps.kotlin.values()
+    implementation deps.androidX.coreKtx
+    implementation deps.androidX.compose.values()
+    implementation deps.androidX.navigation.destinations
+    ksp deps.androidX.navigation.kspDestinations
+    implementation deps.androidX.lifecycle.values()
+
+    implementation deps.room.values()
+    ksp deps.roomCompiler
+
+    implementation deps.ktor.values()
+    implementation deps.accompanist.values()
+
+    implementation deps.hilt.values()
+    kapt deps.hiltComplier
+
+    implementation deps.camera.values()
+    implementation deps.features.values()
+
+    testImplementation deps.test.values()
+    androidTestImplementation deps.instrumentationTest.values()
+}
+
+kapt {
+    correctErrorTypes true
+}

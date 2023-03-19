@@ -1,0 +1,127 @@
+buildscript {
+    ext.kotlin_version = '1.8.10'
+    ext.kotlin_jvm_target = "1.8"
+    ext.android_gradle_plugin = "7.4.2"
+    ext.hilt = "2.44"
+    ext.compose = '1.3.0'
+
+    ext.versions = [
+            'compileSdk'       : 33,
+            'minSDK'           : 24,
+            'targetSDK'        : 33,
+            'versionCode'      : 1,
+            'versionName'      : "1.0",
+
+            'coreKtx'          : "1.7.0",
+            'composeNavigation': "1.8.36-beta",
+            'coroutines'       : "1.6.4",
+            'lifecycle'        : "2.6.0",
+            'room'             : "2.5.0",
+            'ktor'             : "2.1.2",
+            'accompanist'      : "0.28.0",
+            'camera'           : "1.2.1",
+            'qrCode'           : "3.5.1",
+            'excel'            : "v0.1.2",
+            'timber'           : "5.0.1",
+    ]
+    ext.deps = [
+            "kotlin"                   : [
+                    "stdlib"       : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+                    "reflect"      : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+                    "core"         : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
+                    "test"         : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}",
+                    "serialization": "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
+            ],
+            "androidX"                 : [
+                    "coreKtx"   : "androidx.core:core-ktx:${versions.coreKtx}",
+                    "compose"   : [
+                            "activityCompose"      : "androidx.activity:activity-compose:$compose",
+                            "runtime"              : "androidx.compose.runtime:runtime:$compose",
+                            "material"             : "androidx.compose.material:material:$compose",
+                            "materialIcons"        : "androidx.compose.material:material-icons-core:$compose",
+                            "materialIconsExtended": "androidx.compose.material:material-icons-extended:$compose",
+                            "foundation"           : "androidx.compose.foundation:foundation:$compose",
+                            "layout"               : "androidx.compose.foundation:foundation-layout:$compose",
+                            "ui"                   : "androidx.compose.ui:ui:$compose",
+                            "tooling"              : "androidx.compose.ui:ui-tooling:$compose",
+                            "toolingPreview"       : "androidx.compose.ui:ui-tooling-preview:$compose",
+                            "animation"            : "androidx.compose.animation:animation:$compose",
+                            "uiTest"               : "androidx.compose.ui:ui-test-junit4:$compose",
+                            "uiTestManifest"       : "androidx.compose.ui:ui-test-manifest:$compose",
+                    ],
+                    "navigation": [
+                            "destinations"   : "io.github.raamcosta.compose-destinations:animations-core:${versions.composeNavigation}",
+                            "kspDestinations": "io.github.raamcosta.compose-destinations:ksp:${versions.composeNavigation}",
+                    ],
+                    "lifecycle" : [
+                            "lifecycleKtx"    : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+                            "viewModelCompose": "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.lifecycle}",
+                            "viewModelKtx"    : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
+                            "runtime"         : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+                    ],
+            ],
+            "roomCompiler"             : "androidx.room:room-compiler:${versions.room}",
+            "room"                     : [
+                    "roomRuntime": "androidx.room:room-runtime:${versions.room}",
+                    "roomKtx"    : "androidx.room:room-ktx:${versions.room}",
+            ],
+            "ktor"                     : [
+                    "core"         : "io.ktor:ktor-client-core:${versions.ktor}",
+                    "android"      : "io.ktor:ktor-client-android:${versions.ktor}",
+                    "serialization": "io.ktor:ktor-client-serialization:${versions.ktor}",
+                    "logging"      : "io.ktor:ktor-client-logging:${versions.ktor}",
+            ],
+            "accompanist"              : [
+                    "permission"        : "com.google.accompanist:accompanist-permissions:${versions.accompanist}",
+                    "systemuicontroller": "com.google.accompanist:accompanist-systemuicontroller:${versions.accompanist}",
+            ],
+            "hiltComplier"             : "com.google.dagger:hilt-compiler:$hilt",
+            "hilt"                     : [
+                    "gradlePlugin": "com.google.dagger:hilt-android-gradle-plugin:$hilt",
+                    "android"     : "com.google.dagger:hilt-android:$hilt",
+                    "testing"     : "com.google.dagger:hilt-android-testing:$hilt",
+                    "navigation"  : "androidx.hilt:hilt-navigation-compose:1.0.0",
+            ],
+            "camera"                   : [
+                    "camera2"   : "androidx.camera:camera-camera2:${versions.camera}",
+                    "cameraLC"  : "androidx.camera:camera-lifecycle:${versions.camera}",
+                    "cameraView": "androidx.camera:camera-view:${versions.camera}",
+            ],
+            "features"                 : [
+                    "qrCode": "com.google.zxing:core:${versions.qrCode}",
+                    "timber": "com.jakewharton.timber:timber:${versions.timber}",
+            ],
+            "excel" : "com.github.EvanRupert:ExcelKt:${versions.excel}",
+            "testInstrumentationRunner": "androidx.test.runner.AndroidJUnitRunner",
+            "instrumentationTest"      : [
+                    "runner"  : "androidx.test:runner:${versions.runner}",
+                    "expresso": "androidx.test.espresso:espresso-core:${versions.espresso}"
+            ],
+            "test"                     : [
+                    "junit": "junit:junit:${versions.junit}"
+            ],
+    ]
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$android_gradle_plugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
