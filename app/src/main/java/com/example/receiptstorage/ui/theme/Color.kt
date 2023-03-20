@@ -2,7 +2,18 @@ package com.example.receiptstorage.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val baseLightPalette = RsColors(
+    primaryText = Color(0xFFFFFFFF),
+    primaryBackground = Color(0xFF65BCBF),
+    secondaryText = Color(0xCC000000),
+    secondaryBackground = Color(0xFFFFFFFF),
+    tintColor = Color(0xFFF8777D),
+)
+
+val baseDarkPalette = RsColors(
+    primaryText = Color(0xFFFFFFFF),
+    primaryBackground = Color(0xFF121212),
+    secondaryText = Color(0xCC000000),
+    secondaryBackground = Color(0xFF121212),
+    tintColor = Color(0xFFF8777D),
+)
