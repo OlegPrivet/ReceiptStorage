@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ReceiptStorage" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/darkColorPrimary</item>
+        <item name="android:windowBackground">@color/darkColorPrimary</item>
+    </style>
+
+</resources>

@@ -1,44 +1,49 @@
 package com.example.receiptstorage.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
-
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun ReceiptStorageTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun ReceiptStorageTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        baseDarkPalette
     } else {
-        LightColorPalette
+        baseLightPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+    val typography = RsTypography(
+        toolbar = TextStyle(
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+        ),
+        heading = TextStyle(
+            fontSize = 36.sp,
+            fontWeight = FontWeight.SemiBold,
+        ),
+        body = TextStyle(
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+        )
+    )
+
+    val shape = RsShape(
+        padding = 8.dp,
+        shape = RoundedCornerShape(8.dp)
+    )
+
+    CompositionLocalProvider(
+        LocalRsColors provides colors,
+        LocalRsTypography provides typography,
+        LocalRsShape provides shape,
         content = content
     )
 }
