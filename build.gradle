@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_jvm_target = "1.8"
     ext.android_gradle_plugin = "7.4.2"
     ext.hilt = "2.44"
-    ext.compose = '1.3.0'
+    ext.compose = '1.3.3'
 
     ext.versions = [
             'compileSdk'       : 33,
@@ -26,22 +26,23 @@ buildscript {
     ]
     ext.deps = [
             "kotlin"                   : [
-                    "stdlib"       : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
-                    "reflect"      : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
-                    "core"         : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
-                    "test"         : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}",
-                    "serialization": "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
+                    "stdlib"              : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+                    "reflect"             : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+                    "core"                : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
+                    "test"                : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}",
+                    "serialization"       : "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0",
+                    "immutableCollections": "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5",
             ],
             "androidX"                 : [
                     "coreKtx"   : "androidx.core:core-ktx:${versions.coreKtx}",
                     "compose"   : [
                             "activityCompose"      : "androidx.activity:activity-compose:$compose",
                             "runtime"              : "androidx.compose.runtime:runtime:$compose",
-                            "material"             : "androidx.compose.material:material:$compose",
-                            "materialIcons"        : "androidx.compose.material:material-icons-core:$compose",
-                            "materialIconsExtended": "androidx.compose.material:material-icons-extended:$compose",
-                            "foundation"           : "androidx.compose.foundation:foundation:$compose",
-                            "layout"               : "androidx.compose.foundation:foundation-layout:$compose",
+                            "material"             : "androidx.compose.material:material:1.3.0",
+                            "materialIcons"        : "androidx.compose.material:material-icons-core:1.3.0",
+                            "materialIconsExtended": "androidx.compose.material:material-icons-extended:1.3.0",
+                            "foundation"           : "androidx.compose.foundation:foundation:1.3.0",
+                            "layout"               : "androidx.compose.foundation:foundation-layout:1.3.0",
                             "ui"                   : "androidx.compose.ui:ui:$compose",
                             "tooling"              : "androidx.compose.ui:ui-tooling:$compose",
                             "toolingPreview"       : "androidx.compose.ui:ui-tooling-preview:$compose",
@@ -91,7 +92,7 @@ buildscript {
                     "qrCode": "com.google.zxing:core:${versions.qrCode}",
                     "timber": "com.jakewharton.timber:timber:${versions.timber}",
             ],
-            "excel" : "com.github.EvanRupert:ExcelKt:${versions.excel}",
+            "excel"                    : "com.github.EvanRupert:ExcelKt:${versions.excel}",
             "testInstrumentationRunner": "androidx.test.runner.AndroidJUnitRunner",
             "instrumentationTest"      : [
                     "runner"  : "androidx.test:runner:${versions.runner}",
