@@ -12,8 +12,8 @@ val baseLightPalette = RsColors(
 
 val baseDarkPalette = RsColors(
     primaryText = Color(0xFFFFFFFF),
-    primaryBackground = Color(0xFF121212),
-    secondaryText = Color(0xCC000000),
+    primaryBackground = Color(0xFF000000),
+    secondaryText = Color(0xFFFFFFFF),
     secondaryBackground = Color(0xFF121212),
     tintColor = Color(0xFFF8777D),
 )

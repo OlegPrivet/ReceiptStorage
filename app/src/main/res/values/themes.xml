@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/lightColorPrimary</item>
         <item name="android:windowBackground">@color/lightColorPrimary</item>
+        <item name="android:statusBarColor">@color/lightColorPrimary</item>
     </style>
 
     <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />

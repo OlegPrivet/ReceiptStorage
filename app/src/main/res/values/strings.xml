@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">ReceiptStorage</string>
+    <string name="app_name">Receipt Storage</string>
+    <string name="title_total_sum">Total</string>
+    <string name="title_request_permission">Request</string>
+    <string name="title_camera_rational">The camera is needed to scan the QR code</string>
+    <string name="title_qr_code">Scan Qr Code</string>
 </resources>
