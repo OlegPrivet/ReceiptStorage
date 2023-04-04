@@ -1,4 +1,4 @@
-package com.example.receiptstorage.util
+package com.example.receiptstorage.presenter.util
 
 import androidx.compose.runtime.Composable
 

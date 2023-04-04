@@ -1,4 +1,4 @@
-package com.example.receiptstorage.listscreen.view
+package com.example.receiptstorage.presenter.listscreen.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.receiptstorage.R
-import com.example.receiptstorage.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
 
 @Composable
 fun ReceiptTotals(

@@ -1,4 +1,4 @@
-package com.example.receiptstorage.permission
+package com.example.receiptstorage.presenter.permission
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -21,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.receiptstorage.ui.theme.ReceiptStorageTheme
-import com.example.receiptstorage.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.theme.ReceiptStorageTheme
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
 
 
 @Composable

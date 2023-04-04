@@ -1,4 +1,4 @@
-package com.example.receiptstorage.listscreen.view
+package com.example.receiptstorage.presenter.listscreen.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,9 +32,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.receiptstorage.ui.theme.ReceiptStorageTheme
-import com.example.receiptstorage.ui.theme.RsTheme
-import com.example.receiptstorage.util.remember
+import com.example.receiptstorage.presenter.ui.theme.ReceiptStorageTheme
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.util.remember
 import kotlinx.collections.immutable.ImmutableList
 
 

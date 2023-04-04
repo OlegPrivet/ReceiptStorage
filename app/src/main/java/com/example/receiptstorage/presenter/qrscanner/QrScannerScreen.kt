@@ -1,4 +1,4 @@
-package com.example.receiptstorage.qrscanner
+package com.example.receiptstorage.presenter.qrscanner
 
 import android.Manifest
 import android.util.Size
@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.example.receiptstorage.R
-import com.example.receiptstorage.annotation.ReceiptsNavGraph
-import com.example.receiptstorage.permission.RequestPermission
-import com.example.receiptstorage.qrscanner.analyzer.QrCodeAnalyzer
-import com.example.receiptstorage.ui.theme.RsTheme
-import com.example.receiptstorage.util.remember
+import com.example.receiptstorage.presenter.annotation.ReceiptsNavGraph
+import com.example.receiptstorage.presenter.permission.RequestPermission
+import com.example.receiptstorage.presenter.qrscanner.analyzer.QrCodeAnalyzer
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.util.remember
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

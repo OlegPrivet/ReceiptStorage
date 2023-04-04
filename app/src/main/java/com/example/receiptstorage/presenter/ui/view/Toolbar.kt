@@ -1,4 +1,4 @@
-package com.example.receiptstorage.ui.view
+package com.example.receiptstorage.presenter.ui.view
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,7 +7,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.receiptstorage.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
 
 @Composable
 fun Toolbar(

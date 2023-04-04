@@ -1,4 +1,4 @@
-package com.example.receiptstorage.listscreen
+package com.example.receiptstorage.presenter.listscreen
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -10,15 +10,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.receiptstorage.R
-import com.example.receiptstorage.annotation.ReceiptsNavGraph
+import com.example.receiptstorage.presenter.annotation.ReceiptsNavGraph
 import com.example.receiptstorage.destinations.QrScannerScreenDestination
 import com.example.receiptstorage.destinations.ReceiptScreenDestination
-import com.example.receiptstorage.listscreen.view.ReceiptList
-import com.example.receiptstorage.listscreen.view.ReceiptTotals
-import com.example.receiptstorage.ui.theme.RsTheme
-import com.example.receiptstorage.ui.view.ReceiptBackdropScaffold
-import com.example.receiptstorage.ui.view.Toolbar
-import com.example.receiptstorage.util.remember
+import com.example.receiptstorage.presenter.listscreen.view.ReceiptList
+import com.example.receiptstorage.presenter.listscreen.view.ReceiptTotals
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.view.ReceiptBackdropScaffold
+import com.example.receiptstorage.presenter.ui.view.Toolbar
+import com.example.receiptstorage.presenter.util.remember
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.collections.immutable.toImmutableList

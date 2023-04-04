@@ -1,4 +1,4 @@
-package com.example.receiptstorage.receiptscreen
+package com.example.receiptstorage.presenter.receiptscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,12 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.receiptstorage.annotation.ReceiptsNavGraph
-import com.example.receiptstorage.listscreen.view.ReceiptTotals
-import com.example.receiptstorage.ui.theme.RsTheme
-import com.example.receiptstorage.ui.view.ReceiptBackdropScaffold
-import com.example.receiptstorage.ui.view.Toolbar
-import com.example.receiptstorage.util.remember
+import com.example.receiptstorage.presenter.annotation.ReceiptsNavGraph
+import com.example.receiptstorage.presenter.listscreen.view.ReceiptTotals
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.view.ReceiptBackdropScaffold
+import com.example.receiptstorage.presenter.ui.view.Toolbar
+import com.example.receiptstorage.presenter.util.remember
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.collections.immutable.toImmutableList

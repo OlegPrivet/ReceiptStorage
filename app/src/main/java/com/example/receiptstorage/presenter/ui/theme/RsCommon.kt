@@ -1,4 +1,4 @@
-package com.example.receiptstorage.ui.theme
+package com.example.receiptstorage.presenter.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf

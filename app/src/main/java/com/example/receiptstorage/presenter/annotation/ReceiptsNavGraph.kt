@@ -1,4 +1,4 @@
-package com.example.receiptstorage.annotation
+package com.example.receiptstorage.presenter.annotation
 
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.RootNavGraph

@@ -12,9 +12,9 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.navigation.plusAssign
-import com.example.receiptstorage.ui.theme.ReceiptStorageTheme
-import com.example.receiptstorage.ui.theme.baseDarkPalette
-import com.example.receiptstorage.ui.theme.baseLightPalette
+import com.example.receiptstorage.presenter.ui.theme.ReceiptStorageTheme
+import com.example.receiptstorage.presenter.ui.theme.baseDarkPalette
+import com.example.receiptstorage.presenter.ui.theme.baseLightPalette
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout

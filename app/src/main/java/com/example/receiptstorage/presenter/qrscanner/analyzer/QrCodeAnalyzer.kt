@@ -1,4 +1,4 @@
-package com.example.receiptstorage.qrscanner.analyzer
+package com.example.receiptstorage.presenter.qrscanner.analyzer
 
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis

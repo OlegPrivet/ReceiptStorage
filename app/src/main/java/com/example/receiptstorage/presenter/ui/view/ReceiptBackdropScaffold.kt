@@ -1,4 +1,4 @@
-package com.example.receiptstorage.ui.view
+package com.example.receiptstorage.presenter.ui.view
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.receiptstorage.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.theme.RsTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
