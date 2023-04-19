@@ -59,6 +59,7 @@ buildscript {
                             "viewModelCompose": "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.lifecycle}",
                             "viewModelKtx"    : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
                             "runtime"         : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+                            "lifecycleCompose": "androidx.lifecycle:lifecycle-runtime-compose:${versions.lifecycle}",
                     ],
             ],
             "roomCompiler"             : "androidx.room:room-compiler:${versions.room}",
@@ -69,7 +70,8 @@ buildscript {
             "ktor"                     : [
                     "core"         : "io.ktor:ktor-client-core:${versions.ktor}",
                     "android"      : "io.ktor:ktor-client-android:${versions.ktor}",
-                    "serialization": "io.ktor:ktor-client-serialization:${versions.ktor}",
+                    "negotiation"  : "io.ktor:ktor-client-content-negotiation:${versions.ktor}",
+                    "serialization": "io.ktor:ktor-serialization-kotlinx-json:${versions.ktor}",
                     "logging"      : "io.ktor:ktor-client-logging:${versions.ktor}",
             ],
             "accompanist"              : [
@@ -112,6 +114,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:$android_gradle_plugin"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 

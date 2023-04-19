@@ -4,6 +4,7 @@ plugins {
     id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
     id 'com.google.dagger.hilt.android'
     id "org.jetbrains.kotlin.kapt"
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -21,6 +22,15 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        Properties localProperties = new Properties()
+        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+        buildConfigField("String", "ACCESS_TOKEN", localProperties['ACCESS_TOKEN'])
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas".toString())
     }
 
     buildTypes {
