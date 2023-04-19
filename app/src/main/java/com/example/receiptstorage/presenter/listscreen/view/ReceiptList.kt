@@ -28,11 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.receiptstorage.presenter.ui.theme.ReceiptStorageTheme
+import com.example.receiptstorage.R
+import com.example.receiptstorage.core.data.Filter
+import com.example.receiptstorage.core.data.ReceiptUIMinimal
 import com.example.receiptstorage.presenter.ui.theme.RsTheme
 import com.example.receiptstorage.presenter.util.remember
 import kotlinx.collections.immutable.ImmutableList
@@ -42,12 +45,14 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun ReceiptList(
     modifier: Modifier,
-    dates: ImmutableList<String>,
-    receipts: ImmutableList<String>,
-    dateOnClick: (String) -> Unit,
+    dates: ImmutableList<Filter>,
+    receipts: ImmutableList<ReceiptUIMinimal>,
+    dateOnClick: (Filter) -> Unit,
     receiptOnClick: (String) -> Unit,
 ) {
-    var listFilter by remember { mutableStateOf("All") }
+    if (dates.isEmpty()) return
+
+    var listFilter by remember { mutableStateOf(0L) }
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -62,20 +67,25 @@ fun ReceiptList(
         ) {
             items(
                 items = dates,
-                key = { it }
-            ) { date ->
+                key = { it.timestamp }
+            ) { filter ->
                 Chip(
                     modifier = modifier.width(80.dp),
                     onClick = {
-                        listFilter = date
-                        dateOnClick(date)
+                        listFilter = filter.timestamp
+                        dateOnClick(filter)
                     }.remember(),
-                    colors = if (listFilter == date) ChipDefaults.chipColors(backgroundColor = RsTheme.colors.tintColor)
-                    else ChipDefaults.chipColors(backgroundColor = Color.LightGray)
+                    colors = when (listFilter == filter.timestamp) {
+                        true -> ChipDefaults.chipColors(backgroundColor = RsTheme.colors.tintColor)
+                        false -> ChipDefaults.chipColors(backgroundColor = Color.LightGray)
+                    }
                 ) {
                     Text(
                         modifier = modifier.fillMaxWidth(),
-                        text = date,
+                        text = when (filter) {
+                            is Filter.All -> stringResource(R.string.filter_all)
+                            is Filter.ByMonth -> filter.formattedDate
+                        },
                         style = RsTheme.typography.body,
                         color = RsTheme.colors.primaryText,
                         textAlign = TextAlign.Center
@@ -91,7 +101,7 @@ fun ReceiptList(
         ) {
             items(
                 items = receipts,
-                key = { it }
+                key = { it.id }
             ) { receipt ->
                 ReceiptItem(
                     item = receipt,
@@ -105,7 +115,7 @@ fun ReceiptList(
 @Composable
 private fun ReceiptItem(
     modifier: Modifier = Modifier,
-    item: String,
+    item: ReceiptUIMinimal,
     onItemClick: (String) -> Unit,
 ) {
     Row(
@@ -113,7 +123,7 @@ private fun ReceiptItem(
             .fillMaxWidth()
             .height(60.dp)
             .clickable(
-                onClick = { onItemClick(item) }.remember(),
+                onClick = { onItemClick(item.id) }.remember(),
                 indication = rememberRipple(bounded = true),
                 interactionSource = MutableInteractionSource()
             )
@@ -127,12 +137,14 @@ private fun ReceiptItem(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = item,
+                text = item.retailPlace,
                 style = RsTheme.typography.body,
-                color = RsTheme.colors.secondaryText
+                color = RsTheme.colors.secondaryText,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
             )
             Text(
-                text = "01.01.1970",
+                text = item.formattedDate,
                 style = RsTheme.typography.body.copy(fontSize = 12.sp),
                 color = RsTheme.colors.secondaryText.copy(alpha = 0.5f)
             )
@@ -143,26 +155,10 @@ private fun ReceiptItem(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "$ 200.00",
+                text = item.formattedAmount,
                 style = RsTheme.typography.body,
                 color = RsTheme.colors.secondaryText
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun ReceiptItemPreview() {
-    ReceiptStorageTheme {
-        ReceiptItem(item = "Лента", onItemClick = {})
-    }
-}
-
-@Preview
-@Composable
-private fun ReceiptItemPreviewDark() {
-    ReceiptStorageTheme(darkTheme = true) {
-        ReceiptItem(item = "Лента", onItemClick = {})
     }
 }

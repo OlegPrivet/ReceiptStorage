@@ -21,35 +21,53 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.receiptstorage.core.data.ReceiptUIItem
 import com.example.receiptstorage.presenter.annotation.ReceiptsNavGraph
 import com.example.receiptstorage.presenter.listscreen.view.ReceiptTotals
+import com.example.receiptstorage.presenter.receiptscreen.viewmodel.ReceiptAction
+import com.example.receiptstorage.presenter.receiptscreen.viewmodel.ReceiptScreenViewModel
 import com.example.receiptstorage.presenter.ui.theme.RsTheme
 import com.example.receiptstorage.presenter.ui.view.ReceiptBackdropScaffold
 import com.example.receiptstorage.presenter.ui.view.Toolbar
 import com.example.receiptstorage.presenter.util.remember
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.collections.immutable.toImmutableList
 
 @Destination
 @ReceiptsNavGraph
 @Composable
 fun ReceiptScreen(
     destinationsNavigator: DestinationsNavigator,
+    receiptId: String,
+    viewModel: ReceiptScreenViewModel = hiltViewModel(),
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.initialize(receiptId)
+    }
+    val action = viewModel.action.collectAsStateWithLifecycle()
+    when (action.value) {
+        is ReceiptAction.Unknown -> {}
+        is ReceiptAction.Back -> destinationsNavigator.popBackStack()
+    }
+
+    val uiState = viewModel.receipt.collectAsStateWithLifecycle()
     ReceiptBackdropScaffold(
         appBar = remember {
             {
                 Toolbar(
-                    titleText = "Name of shop",
+                    titleText = uiState.value.title,
                     navigationIcon = {
                         IconButton(
-                            onClick = remember { { destinationsNavigator.navigateUp() } }
+                            onClick = remember { { viewModel.sendAction(ReceiptAction.Back) } }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
@@ -60,7 +78,7 @@ fun ReceiptScreen(
                     },
                     actions = {
                         IconButton(
-                            onClick = { }.remember(),
+                            onClick = viewModel::deleteReceipt,
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Delete,
@@ -74,7 +92,7 @@ fun ReceiptScreen(
         },
         backLayerContent = remember {
             {
-                ReceiptTotals(totalSum = "$ 23 093.20")
+                ReceiptTotals(totalSum = uiState.value.formattedAmount)
             }
         },
         frontLayerContent = remember {
@@ -86,31 +104,12 @@ fun ReceiptScreen(
                     contentPadding = PaddingValues(8.dp)
                 ) {
                     items(
-                        items = listOf(
-                            "All",
-                            "03.23",
-                            "04.23",
-                            "05.23",
-                            "06.23",
-                            "07.23",
-                            "08.23",
-                            "09.23",
-                            "10.23",
-                            "All1",
-                            "03.231",
-                            "04.231",
-                            "05.231",
-                            "06.231",
-                            "07.231",
-                            "08.231",
-                            "09.231",
-                            "10.231"
-                        ).toImmutableList(),
-                        key = { it }
+                        items = uiState.value.items,
+                        key = { it.id }
                     ) { receipt ->
                         ReceiptItem(
                             item = receipt,
-                            onItemClick = { }
+                            onItemClick = remember { {} }
                         )
                     }
                 }
@@ -122,8 +121,8 @@ fun ReceiptScreen(
 @Composable
 private fun ReceiptItem(
     modifier: Modifier = Modifier,
-    item: String,
-    onItemClick: (String) -> Unit,
+    item: ReceiptUIItem,
+    onItemClick: (ReceiptUIItem) -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -144,12 +143,14 @@ private fun ReceiptItem(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = item,
-                style = RsTheme.typography.body,
-                color = RsTheme.colors.secondaryText
+                text = item.name,
+                style = RsTheme.typography.body.copy(fontSize = 14.sp),
+                color = RsTheme.colors.secondaryText,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
             )
             Text(
-                text = "1 шт.",
+                text = "${item.formattedPrice} × ${item.quantity} ${item.unit ?: ""}",
                 style = RsTheme.typography.body.copy(fontSize = 12.sp),
                 color = RsTheme.colors.secondaryText.copy(alpha = 0.5f)
             )
@@ -160,9 +161,9 @@ private fun ReceiptItem(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "$ 200.00",
+                text = item.formattedSum,
                 style = RsTheme.typography.body,
-                color = RsTheme.colors.secondaryText
+                color = RsTheme.colors.secondaryText,
             )
         }
     }

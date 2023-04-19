@@ -1,4 +1,4 @@
-package com.example.receiptstorage.presenter.permission
+package com.example.receiptstorage.presenter.ui.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -24,12 +24,12 @@ import androidx.compose.ui.unit.dp
 import com.example.receiptstorage.presenter.ui.theme.ReceiptStorageTheme
 import com.example.receiptstorage.presenter.ui.theme.RsTheme
 
-
 @Composable
-fun RequestPermission(
+fun BottomSheetDialogError(
     modifier: Modifier = Modifier,
-    permissionText: String,
-    requestButton: () -> Unit,
+    errorText: String,
+    okButton: () -> Unit,
+    okButtonText: String,
     cancelButton: () -> Unit,
 ) {
     Column(
@@ -46,7 +46,7 @@ fun RequestPermission(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp),
-            text = permissionText,
+            text = errorText,
             style = RsTheme.typography.body,
             color = RsTheme.colors.secondaryText,
             textAlign = TextAlign.Center
@@ -76,12 +76,12 @@ fun RequestPermission(
             Button(
                 modifier = modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp),
-                onClick = requestButton,
+                onClick = okButton,
                 colors = ButtonDefaults.buttonColors(backgroundColor = RsTheme.colors.tintColor)
             ) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = stringResource(com.example.receiptstorage.R.string.title_request_permission),
+                    text = okButtonText,
                     style = RsTheme.typography.body,
                     color = RsTheme.colors.primaryText,
                     textAlign = TextAlign.Center
@@ -95,7 +95,11 @@ fun RequestPermission(
 @Composable
 private fun PreviewRequestPermissionBottomSheet() {
     ReceiptStorageTheme {
-        RequestPermission(permissionText = "Bla bla  bla", requestButton = {}, cancelButton = {})
+        BottomSheetDialogError(
+            errorText = "Bla bla  bla",
+            okButton = {},
+            okButtonText = stringResource(com.example.receiptstorage.R.string.title_request_permission),
+            cancelButton = {})
     }
 }
 
@@ -103,6 +107,10 @@ private fun PreviewRequestPermissionBottomSheet() {
 @Composable
 private fun PreviewRequestPermissionBottomSheetDark() {
     ReceiptStorageTheme(darkTheme = true) {
-        RequestPermission(permissionText = "Bla bla  bla", requestButton = {}, cancelButton = {})
+        BottomSheetDialogError(
+            errorText = "Bla bla  bla",
+            okButton = {},
+            okButtonText = stringResource(com.example.receiptstorage.R.string.title_request_permission),
+            cancelButton = {})
     }
 }

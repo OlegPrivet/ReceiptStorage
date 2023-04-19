@@ -4,4 +4,7 @@
     <string name="title_request_permission">Request</string>
     <string name="title_camera_rational">The camera is needed to scan the QR code</string>
     <string name="title_qr_code">Scan Qr Code</string>
+    <string name="filter_all">All</string>
+    <string name="fetching_data_qr_code">Fetch receipt data...</string>
+    <string name="repeat_request">Repeat request</string>
 </resources>

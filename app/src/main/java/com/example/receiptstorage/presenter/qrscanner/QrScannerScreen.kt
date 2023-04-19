@@ -1,42 +1,28 @@
 package com.example.receiptstorage.presenter.qrscanner
 
 import android.Manifest
-import android.util.Size
-import android.view.ViewGroup
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.receiptstorage.R
 import com.example.receiptstorage.presenter.annotation.ReceiptsNavGraph
-import com.example.receiptstorage.presenter.permission.RequestPermission
-import com.example.receiptstorage.presenter.qrscanner.analyzer.QrCodeAnalyzer
+import com.example.receiptstorage.presenter.destinations.ReceiptScreenDestination
+import com.example.receiptstorage.presenter.qrscanner.action.QrScannerAction
+import com.example.receiptstorage.presenter.qrscanner.state.QrScannerScreenState
+import com.example.receiptstorage.presenter.qrscanner.view.QrCodeFetchDataView
+import com.example.receiptstorage.presenter.qrscanner.view.QrCodeScanView
+import com.example.receiptstorage.presenter.qrscanner.viewmodel.QrScannerViewModel
 import com.example.receiptstorage.presenter.ui.theme.RsTheme
+import com.example.receiptstorage.presenter.ui.view.BottomSheetDialogError
 import com.example.receiptstorage.presenter.util.remember
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -51,88 +37,50 @@ import com.ramcosta.composedestinations.spec.DestinationStyle
 @Composable
 fun QrScannerScreen(
     destinationsNavigator: DestinationsNavigator,
+    viewModel: QrScannerViewModel = hiltViewModel(),
 ) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val permissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
     if (permissionState.status.isGranted) {
-        QRCode(destinationsNavigator = destinationsNavigator)
-    } else {
-        RequestPermission(
-            permissionText = stringResource(R.string.title_camera_rational),
-            requestButton = { permissionState.launchPermissionRequest() }.remember(),
-            cancelButton = remember { { destinationsNavigator.popBackStack() } }
-        )
-    }
-}
-
-@Composable
-private fun QRCode(
-    destinationsNavigator: DestinationsNavigator,
-) {
-    var code by remember { mutableStateOf("") }
-    val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val screenSize = LocalConfiguration.current
-    val cameraHeight by remember { mutableStateOf((screenSize.screenHeightDp / 3)) }
-    val cameraProviderFuture = remember {
-        ProcessCameraProvider.getInstance(context)
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = RsTheme.colors.secondaryBackground),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            text = stringResource(R.string.title_qr_code),
-            style = RsTheme.typography.heading,
-            color = RsTheme.colors.secondaryText,
-            textAlign = TextAlign.Center
-        )
-        AndroidView(
-            factory = { context ->
-                val previewView = PreviewView(context).apply {
-                    layoutParams = ViewGroup.LayoutParams(cameraHeight, cameraHeight)
-                }
-                val preview = Preview.Builder().build()
-                val selector = CameraSelector.Builder()
-                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                    .build()
-                preview.setSurfaceProvider(previewView.surfaceProvider)
-                val imageAnalysis = ImageAnalysis.Builder()
-                    .setTargetResolution(Size(cameraHeight, cameraHeight))
-                    .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
-                    .build()
-                imageAnalysis.setAnalyzer(
-                    ContextCompat.getMainExecutor(context),
-                    QrCodeAnalyzer { result ->
-                        code = result
+                .fillMaxSize()
+                .background(color = RsTheme.colors.secondaryBackground),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            when (uiState.value) {
+                is QrScannerScreenState.Scanning -> QrCodeScanView(viewModel)
+                is QrScannerScreenState.FetchingData -> QrCodeFetchDataView()
+                is QrScannerScreenState.ShowingResult.ShowError -> BottomSheetDialogError(
+                    errorText = (uiState.value as QrScannerScreenState.ShowingResult.ShowError).error,
+                    okButton = remember {
+                        {
+                            viewModel.setAction(QrScannerAction.ScanQr)
+                        }
+                    },
+                    okButtonText = stringResource(id = R.string.repeat_request),
+                    cancelButton = remember {
+                        {
+                            destinationsNavigator.popBackStack()
+                        }
                     }
                 )
-                try {
-                    cameraProviderFuture.get().bindToLifecycle(
-                        lifecycleOwner,
-                        selector,
-                        preview,
-                        imageAnalysis
+                is QrScannerScreenState.ShowingResult.ShowSuccess -> {
+                    destinationsNavigator.navigate(
+                        ReceiptScreenDestination(
+                            (uiState.value as QrScannerScreenState.ShowingResult.ShowSuccess).receiptId
+                        )
                     )
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
-                previewView
-            },
-            modifier = Modifier.height(cameraHeight.dp)
-        )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            text = code,
-            style = RsTheme.typography.body,
-            color = RsTheme.colors.secondaryText,
-            textAlign = TextAlign.Center
+            }
+        }
+    } else {
+        BottomSheetDialogError(
+            errorText = stringResource(R.string.title_camera_rational),
+            okButton = { permissionState.launchPermissionRequest() }.remember(),
+            okButtonText = stringResource(com.example.receiptstorage.R.string.title_request_permission),
+            cancelButton = remember { { destinationsNavigator.popBackStack() } }
         )
     }
 }
