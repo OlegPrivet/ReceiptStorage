@@ -66,6 +66,7 @@ dependencies {
     implementation deps.androidX.coreKtx
     implementation deps.androidX.compose.values()
     implementation deps.androidX.navigation.destinations
+    implementation deps.googleMl
     ksp deps.androidX.navigation.kspDestinations
     implementation deps.androidX.lifecycle.values()
 
