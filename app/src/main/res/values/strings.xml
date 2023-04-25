@@ -7,4 +7,6 @@
     <string name="filter_all">All</string>
     <string name="fetching_data_qr_code">Fetch receipt data...</string>
     <string name="repeat_request">Repeat request</string>
+    <string name="connection_error">No network connection</string>
+    <string name="go_to_settings">Go to settings</string>
 </resources>
